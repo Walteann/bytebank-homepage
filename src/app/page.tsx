@@ -1,7 +1,12 @@
+'use client'
 import Image from "next/image";
 import Button from "./components/ui/button/Button";
 import CardProduct from "./components/ui/card-product/CardProduct";
+import { useModal } from "./components/ui/modal/useModal";
+import { SignUp } from "./components/ui/modal/SignUp";
 export default function Home() {
+	const { open, Modal } = useModal(<SignUp />);
+
 	const advantages = [
 		{
 			id: 1,
@@ -57,6 +62,7 @@ export default function Home() {
 					<Button
 						value="Abrir conta"
 						className="!bg-black !px-[28.4px] text-nowrap"
+						onClick={open}
 					/>
 					<Button
 						value="Já tenho conta"
@@ -82,6 +88,7 @@ export default function Home() {
 					</div>
 				</div>
 			</div>
+			{Modal}
 		</section>
 	);
 }
