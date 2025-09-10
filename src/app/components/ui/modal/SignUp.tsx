@@ -7,7 +7,7 @@ export const SignUp = () => {
     return (
         <form className="flex flex-col gap-3 relative py-[26px] overflow-y-auto scroll-thin max-h-[85vh] md:max-h-none md:w-[445px] md:py-[40px] md:items-center md:justify-center lg:md:w-[589px]">
             <div className="w-full relative w-[294px] h-[217px] md:w-[354.97px] md:h-[261.59px] flex items-center">
-                <Image fill className="object-cover !relative" src="/images/Ilustração_Login.svg" alt="ilustracao login" />
+                <Image fill className="object-cover !relative" src="/images/Ilustração_SignUp.svg" alt="ilustracao login" />
             </div>
 			<h2 className="text-xl font-bold mb-4">Preencha os campos abaixo para criar sua conta corrente!</h2>
 
@@ -25,7 +25,7 @@ export const SignUp = () => {
             </div>
 
             <div className="w-full flex justify-center">
-                <Button value="Criar conta" className="max-w-fit !bg-accent !hover:bg-primary !md:max-w-none"/>
+                <Button value="Criar conta" className="max-w-fit !bg-accent hover:!bg-primary md:!max-w-none"/>
             </div>
 
 		</form>

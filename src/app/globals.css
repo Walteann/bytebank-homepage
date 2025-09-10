@@ -52,3 +52,21 @@ body {
 	color: var(--color-black);
 	font-family: var(--font-inter);
 }
+
+.scroll-thin {
+  scrollbar-width: none; /* Firefox */
+  scrollbar-color: var(--color-disabled) transparent; /* cor da barra e do fundo */
+}
+
+.scroll-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll-thin::-webkit-scrollbar-thumb {
+  background-color: var(--color-disabled);
+  border-radius: 6px;
+}
+
+.scroll-thin::-webkit-scrollbar-track {
+  background: transparent;
+}

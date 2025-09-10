@@ -4,8 +4,11 @@ import Button from "./components/ui/button/Button";
 import CardProduct from "./components/ui/card-product/CardProduct";
 import { useModal } from "./components/ui/modal/useModal";
 import { SignUp } from "./components/ui/modal/SignUp";
+import { SignIn } from "./components/ui/modal/SignIn";
 export default function Home() {
-	const { open, Modal } = useModal(<SignUp />);
+	
+	const { open: openSignUp, Modal: ModalSignUp } = useModal(<SignUp />);
+	const { open: openSignIn, Modal: ModalSignIn } = useModal(<SignIn />);
 
 	const advantages = [
 		{
@@ -62,11 +65,12 @@ export default function Home() {
 					<Button
 						value="Abrir conta"
 						className="!bg-black !px-[28.4px] text-nowrap"
-						onClick={open}
+						onClick={openSignUp}
 					/>
 					<Button
 						value="Já tenho conta"
 						className="bg-transparent !px-[28.4px] text-nowrap !text-black border-2 border-black hover:bg-white hover:border-white hover:!text-black"
+						onClick={openSignIn}
 					/>
 				</div>
 
@@ -88,7 +92,8 @@ export default function Home() {
 					</div>
 				</div>
 			</div>
-			{Modal}
+			{ModalSignUp}
+			{ModalSignIn}
 		</section>
 	);
 }

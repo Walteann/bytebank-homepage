@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -6,11 +6,11 @@ import { MdMenu } from "react-icons/md";
 import Button from "../ui/button/Button";
 import { useModal } from "../ui/modal/useModal";
 import { SignUp } from "../ui/modal/SignUp";
+import { SignIn } from "../ui/modal/SignIn";
 
 const Header = () => {
-	const { open, Modal } = useModal(
-        <SignUp />
-	);
+	const { open: openSignUp, Modal: ModalSignUp } = useModal(<SignUp />);
+	const { open: openSignIn, Modal: ModalSignIn } = useModal(<SignIn />);
 
 	return (
 		<header className="w-full h-[96px] bg-black flex justify-center">
@@ -43,11 +43,12 @@ const Header = () => {
 					<Button
 						className="bg-success text-white"
 						value="Abrir conta"
-                        onClick={open}
+						onClick={openSignUp}
 					/>
 					<Button
 						className="bg-transparent !text-success border-2 border-success hover:bg-white hover:border-white hover:!text-black"
 						value="Já tenho conta"
+						onClick={openSignIn}
 					/>
 				</div>
 
@@ -63,7 +64,8 @@ const Header = () => {
 				</Link>
 			</div>
 
-            {Modal}
+			{ModalSignUp}
+			{ModalSignIn}
 		</header>
 	);
 };

@@ -1,4 +1,3 @@
-// src/components/useModal.tsx
 "use client";
 
 import { useState, ReactNode } from "react";
@@ -15,7 +14,7 @@ function BaseModal({ children, onClose }: ModalProps) {
       <div className="bg-white shadow-lg w-full p-6 relative h-full flex justify-center lg:w-[792px]">
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-gray-600 hover:text-black"
+          className="absolute top-2 right-2 text-gray-600 hover:text-black hover:cursor-pointer"
         > 
           <FaTimes size={24}/>
         </button>
