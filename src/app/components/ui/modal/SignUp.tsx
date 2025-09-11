@@ -8,15 +8,15 @@ import Button from "../button/Button";
 import InputCheckbox from "../input-checkbox/InputCheckbox";
 
 const signUpSchema = z.object({
-	nome: z
+	name: z
 		.string()
 		.min(3, "O nome precisa ter no mínimo 3 caracteres")
 		.nonempty("Nome é obrigatório"),
 	email: z
 		.email("Dado incorreto. Revise e digite novamente.")
 		.nonempty("Email é obrigatório"),
-	senha: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
-	aceite: z.boolean().refine((val) => val, {
+	password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
+	accepted: z.boolean().refine((val) => val, {
 		message: "Você precisa aceitar a política de privacidade",
 	}),
 });
@@ -54,42 +54,36 @@ export const SignUp = () => {
 			</h2>
 
 			<div className="w-full flex gap-[24px] flex-col">
-				<div>
-					<InputText
-						{...register("nome")}
-						label="Nome"
-						type="text"
-						placeholder="Digite seu nome completo"
-						error={errors.nome?.message}
-					/>
-				</div>
+				<InputText
+					{...register("name")}
+					label="Nome"
+					type="text"
+					placeholder="Digite seu nome completo"
+					error={errors.name?.message}
+				/>
 
-				<div>
-					<InputText
-						label="E-mail"
-						type="email"
-						placeholder="Digite seu nome completo"
-						{...register("email")}
-						error={errors.email?.message}
-					/>
-				</div>
+				<InputText
+					label="E-mail"
+					type="email"
+					placeholder="Digite seu nome completo"
+					{...register("email")}
+					error={errors.email?.message}
+				/>
 
-				<div>
-					<InputText
-						label="Senha"
-						type="password"
-						{...register("senha")}
-						placeholder="Digite seu nome completo"
-						className="md:w-[280px]"
-						error={errors.senha?.message}
-					/>
-				</div>
+				<InputText
+					label="Senha"
+					type="password"
+					{...register("password")}
+					placeholder="Digite seu nome completo"
+					className="md:w-[280px]"
+					error={errors.password?.message}
+				/>
 			</div>
 
 			<div className="w-full py-[16px]">
 				<InputCheckbox
-					{...register("aceite")}
-					error={errors.aceite?.message}
+					{...register("accepted")}
+					error={errors.accepted?.message}
 					label="Li e estou ciente quanto às condições de tratamento dos meus dados conforme descrito na Política de Privacidade do banco."
 				/>
 			</div>

@@ -30,8 +30,9 @@ export default function InputCheckbox({
           w-[24px] h-[24px] flex items-center justify-center rounded border-2 w-max-fit
           ${checked ? "bg-success border-success" : "border-success"}
           peer-focus:ring-2 peer-focus:ring-green-300
-          transition-colors ${error ? "!border-error" : "border-success"}
-        `}
+          transition-colors
+		  `}
+        //   transition-colors ${error ? "!border-error" : "border-success"}
 				>
 					{checked && (
 						<svg
