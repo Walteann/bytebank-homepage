@@ -1,14 +1,23 @@
-# Build stage
-FROM node:22-alpine AS builder
+# ETAPA 1: Builder
+FROM node:18-alpine AS builder
 WORKDIR /app
+
 COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
 
-# Runtime stage
-FROM node:22-alpine
+# ETAPA 2: Runner
+FROM node:18-slim AS runner
 WORKDIR /app
-COPY --from=builder /app ./
-EXPOSE 3001
-CMD ["npm", "run", "dev", "--", "-p", "3001"]
+
+ENV NODE_ENV production
+
+# Copia a saída otimizada do builder
+# A pasta .next/standalone já contém tudo o que é necessário para rodar a aplicação,
+# incluindo node_modules, public (se existir), e os arquivos de servidor.
+COPY --from=builder /app/.next/standalone/ ./
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]

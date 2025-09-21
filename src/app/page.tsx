@@ -2,9 +2,9 @@
 import Image from "next/image";
 import Button from "./components/ui/button/Button";
 import CardProduct from "./components/ui/card-product/CardProduct";
-import { useModal } from "./components/ui/modal/useModal";
-import { SignUp } from "./components/ui/modal/SignUp";
-import { SignIn } from "./components/ui/modal/SignIn";
+import  useModal  from "./components/ui/modal/useModal";
+import  SignUp  from "./components/ui/modal/SignUp";
+import  SignIn from "./components/ui/modal/SignIn";
 export default function Home() {
 	
 	const { open: openSignUp, Modal: ModalSignUp } = useModal(<SignUp />);
@@ -13,7 +13,7 @@ export default function Home() {
 	const advantages = [
 		{
 			id: 1,
-			image: "/images/Icone_Presente.svg",
+			image: "/homepage/images/Icone_Presente.svg",
 			alt: "icone presente",
 			title: "Conta e cartão gratuitos",
 			description:

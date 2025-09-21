@@ -24,7 +24,7 @@ function BaseModal({ children, onClose }: ModalProps) {
   );
 }
 
-export function useModal(content: ReactNode) {
+function useModal(content: ReactNode) {
   const [isOpen, setIsOpen] = useState(false);
 
   const open = () => setIsOpen(true);
@@ -36,3 +36,5 @@ export function useModal(content: ReactNode) {
 
   return { open, close, Modal };
 }
+
+export default useModal;

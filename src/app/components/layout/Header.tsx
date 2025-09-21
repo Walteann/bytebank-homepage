@@ -4,9 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { MdMenu } from "react-icons/md";
 import Button from "../ui/button/Button";
-import { useModal } from "../ui/modal/useModal";
-import { SignUp } from "../ui/modal/SignUp";
-import { SignIn } from "../ui/modal/SignIn";
+import useModal from "../ui/modal/useModal";
+import SignUp from "../ui/modal/SignUp";
+import SignIn from "../ui/modal/SignIn";
 
 const Header = () => {
 	const { open: openSignUp, Modal: ModalSignUp } = useModal(<SignUp />);

@@ -23,7 +23,7 @@ const signUpSchema = z.object({
 
 type SignUpSchema = z.infer<typeof signUpSchema>;
 
-export const SignUp = () => {
+const SignUp = () => {
 	const {
 		register,
 		handleSubmit,
@@ -98,3 +98,5 @@ export const SignUp = () => {
 		</form>
 	);
 };
+
+export default SignUp;
