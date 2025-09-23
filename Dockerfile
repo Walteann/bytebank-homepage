@@ -18,6 +18,12 @@ ENV NODE_ENV production
 # incluindo node_modules, public (se existir), e os arquivos de servidor.
 COPY --from=builder /app/.next/standalone/ ./
 
+# Copia os assets estáticos (CSS, JS, etc.) gerados pelo build.
+COPY --from=builder /app/.next/static/ ./.next/static
+# Copia a pasta public (imagens, fontes, etc.).
+COPY --from=builder /app/public ./public
+
 EXPOSE 3000
 
 CMD ["node", "server.js"]
+# CMD ["next", "dev"]

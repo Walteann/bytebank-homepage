@@ -7,6 +7,16 @@ const nextConfig: NextConfig = {
   // Ele será tratado pelo rewrite na aplicação principal (shell).
   assetPrefix: '/homepage',
   output: 'standalone',
+   async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: '/homepage/_next/:path+',
+          destination: '/_next/:path+',
+        },
+      ],
+    }
+  },
 };
 
 export default nextConfig;

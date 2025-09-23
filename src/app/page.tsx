@@ -13,7 +13,7 @@ export default function Home() {
 	const advantages = [
 		{
 			id: 1,
-			image: "/homepage/images/Icone_Presente.svg",
+			image: "/images/Icone_Presente.svg",
 			alt: "icone presente",
 			title: "Conta e cartão gratuitos",
 			description:
