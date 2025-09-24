@@ -22,9 +22,7 @@ export default function InputCheckbox({
 					checked={checked}
 					onChange={() => setChecked(!checked)}
 					className="peer hidden"
-					{...rest}
 				/>
-				{/* Quadrado customizado */}
 				<span
 					className={`
           w-[24px] h-[24px] flex items-center justify-center rounded border-2 w-max-fit
@@ -32,7 +30,6 @@ export default function InputCheckbox({
           peer-focus:ring-2 peer-focus:ring-green-300
           transition-colors
 		  `}
-        //   transition-colors ${error ? "!border-error" : "border-success"}
 				>
 					{checked && (
 						<svg
@@ -52,7 +49,7 @@ export default function InputCheckbox({
 					)}
 				</span>
 				<span className="w-[250px] md:w-[400px] text-md font-regular">
-					{label}
+					{label} - {checked}
 				</span>
 			</label>
 			{error && (

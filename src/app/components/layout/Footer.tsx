@@ -27,7 +27,7 @@ const Footer = () => {
                 <div className="flex flex-col gap-[24px] max-w-max">
                     <h4 className="font-bold">Desenvolvido por Alura</h4>
                     
-                    <Image src="/logo/Logo_white.svg" alt="logo bytebank white" width={145.6} height={32}/>
+                    <Image src="https://bytebank-assets.vercel.app/logo/Logo_white.svg" alt="logo bytebank white" width={145.6} height={32}/>
 
                     <div className="flex">
                         <FaInstagram className="text-[32px] mr-[16px]"/>

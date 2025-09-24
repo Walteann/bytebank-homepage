@@ -5,7 +5,9 @@ import CardProduct from "./components/ui/card-product/CardProduct";
 import  useModal  from "./components/ui/modal/useModal";
 import  SignUp  from "./components/ui/modal/SignUp";
 import  SignIn from "./components/ui/modal/SignIn";
+
 export default function Home() {
+	const BYTEBANK_ASSETS = 'https://bytebank-assets.vercel.app'
 	
 	const { open: openSignUp, Modal: ModalSignUp } = useModal(<SignUp />);
 	const { open: openSignIn, Modal: ModalSignIn } = useModal(<SignIn />);
@@ -13,7 +15,7 @@ export default function Home() {
 	const advantages = [
 		{
 			id: 1,
-			image: "/images/Icone_Presente.svg",
+			image: `${BYTEBANK_ASSETS}/images/Icone_Presente.svg`,
 			alt: "icone presente",
 			title: "Conta e cartão gratuitos",
 			description:
@@ -21,7 +23,7 @@ export default function Home() {
 		},
 		{
 			id: 2,
-			image: "/images/Icone_Saque.svg",
+			image: `${BYTEBANK_ASSETS}/images/Icone_Saque.svg`,
 			alt: "icone Saques sem custo",
 			title: "Saques sem custo",
 			description:
@@ -29,7 +31,7 @@ export default function Home() {
 		},
 		{
 			id: 3,
-			image: "/images/Icone_Pontos.svg",
+			image: `${BYTEBANK_ASSETS}/images/Icone_Pontos.svg`,
 			alt: "icone Programa de pontos",
 			title: "Programa de pontos",
 			description:
@@ -37,7 +39,7 @@ export default function Home() {
 		},
 		{
 			id: 4,
-			image: "/images/Icone_Presente.svg",
+			image: `${BYTEBANK_ASSETS}/images/Icone_Presente.svg`,
 			alt: "icone Seguro Dispositivos",
 			title: "Seguro Dispositivos",
 			description:
@@ -56,7 +58,7 @@ export default function Home() {
 					<Image
 						fill
 						className="object-cover"
-						src="/images/Ilustração_Banner.svg"
+						src={`${BYTEBANK_ASSETS}/images/Ilustração_Banner.svg`}
 						alt="ilustracao banner"
 					/>
 				</div>

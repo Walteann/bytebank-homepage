@@ -18,16 +18,16 @@ const Header = () => {
 				<div className="flex items-center md:gap-[24px] lg:gap-[72px]">
 					<Image
 						className="hidden md:block lg:hidden"
-						src="/logo/Logo_mini.svg"
+						src="https://bytebank-assets.vercel.app/logo/Logo_mini.svg"
 						alt="Logo bytebank"
-						width={26.6}
-						height={26.6}
+						width={27}
+						height={27}
 					/>
 					<Image
 						className="hidden md:hidden lg:block"
-						src="/logo/Logo_1.svg"
+						src="https://bytebank-assets.vercel.app/logo/Logo_1.svg"
 						alt="Logo bytebank"
-						width={145.6}
+						width={146}
 						height={32}
 					/>
 
@@ -56,9 +56,9 @@ const Header = () => {
 
 				<Link href="/" className="pr-[3.4px] md:hidden">
 					<Image
-						src="/logo/Logo_1.svg"
+						src="https://bytebank-assets.vercel.app/logo/Logo_1.svg"
 						alt="Logo bytebank"
-						width={145.6}
+						width={146}
 						height={32}
 					/>
 				</Link>

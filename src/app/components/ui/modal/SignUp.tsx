@@ -45,7 +45,7 @@ const SignUp = () => {
 				<Image
 					fill
 					className="object-cover !relative"
-					src="/images/Ilustração_SignUp.svg"
+					src="https://bytebank-assets.vercel.app/images/Ilustração_SignUp.svg"
 					alt="ilustracao login"
 				/>
 			</div>

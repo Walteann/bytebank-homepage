@@ -1,17 +1,16 @@
 import type { NextConfig } from "next";
 
+const { NEXT_PUBLIC_BASE_PATH } = process.env;
+
 const nextConfig: NextConfig = {
-  // O basePath informa ao Next.js que todas as rotas deste app começam com /store.
-  basePath: '/homepage',
-  // O assetPrefix é para servir arquivos estáticos (JS, CSS, imagens).
-  // Ele será tratado pelo rewrite na aplicação principal (shell).
-  assetPrefix: '/homepage',
+  basePath: `${NEXT_PUBLIC_BASE_PATH}`,
+  assetPrefix: `${NEXT_PUBLIC_BASE_PATH}`,
   output: 'standalone',
    async rewrites() {
     return {
       beforeFiles: [
         {
-          source: '/homepage/_next/:path+',
+          source: `${NEXT_PUBLIC_BASE_PATH}/_next/:path+`,
           destination: '/_next/:path+',
         },
       ],
