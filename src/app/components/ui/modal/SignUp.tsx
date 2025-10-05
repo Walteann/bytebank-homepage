@@ -5,10 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import InputText from "../input-text/InputText";
 import Button from "../button/Button";
-import InputCheckbox from "../input-checkbox/InputCheckbox";
+import { signUp } from "@/app/services/auth";
 
 const signUpSchema = z.object({
-	name: z
+	username: z
 		.string()
 		.min(3, "O nome precisa ter no mínimo 3 caracteres")
 		.nonempty("Nome é obrigatório"),
@@ -16,9 +16,6 @@ const signUpSchema = z.object({
 		.email("Dado incorreto. Revise e digite novamente.")
 		.nonempty("Email é obrigatório"),
 	password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
-	accepted: z.boolean().refine((val) => val, {
-		message: "Você precisa aceitar a política de privacidade",
-	}),
 });
 
 type SignUpSchema = z.infer<typeof signUpSchema>;
@@ -33,7 +30,7 @@ const SignUp = () => {
 	});
 
 	const onSubmit = (data: SignUpSchema) => {
-		console.log("Form enviado:", data);
+		signUp(data);
 	};
 
 	return (
@@ -55,11 +52,11 @@ const SignUp = () => {
 
 			<div className="w-full flex gap-[24px] flex-col">
 				<InputText
-					{...register("name")}
+					{...register("username")}
 					label="Nome"
 					type="text"
 					placeholder="Digite seu nome completo"
-					error={errors.name?.message}
+					error={errors.username?.message}
 				/>
 
 				<InputText
@@ -77,14 +74,6 @@ const SignUp = () => {
 					placeholder="Digite seu nome completo"
 					className="md:w-[280px]"
 					error={errors.password?.message}
-				/>
-			</div>
-
-			<div className="w-full py-[16px]">
-				<InputCheckbox
-					{...register("accepted")}
-					error={errors.accepted?.message}
-					label="Li e estou ciente quanto às condições de tratamento dos meus dados conforme descrito na Política de Privacidade do banco."
 				/>
 			</div>
 

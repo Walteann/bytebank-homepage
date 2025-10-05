@@ -10,7 +10,6 @@ interface InputCheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
 export default function InputCheckbox({
 	label,
 	error,
-	...rest
 }: InputCheckboxProps) {
 	const [checked, setChecked] = useState(false);
 
