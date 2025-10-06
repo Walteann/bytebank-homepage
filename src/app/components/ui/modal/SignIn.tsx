@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../button/Button";
 import InputText from "../input-text/InputText";
 import Image from "next/image";
+import { signIn } from "@/app/services/auth";
 
 const signInSchema = z.object({
 	email: z.email("Email inválido").nonempty("Email é obrigatório"),
@@ -23,7 +24,7 @@ const SignIn = () => {
 	});
 
 	const onSubmit = (data: SignInSchema) => {
-		console.log("Form enviado:", data);
+		signIn(data);
 	};
 
 	return (
