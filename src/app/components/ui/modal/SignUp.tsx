@@ -26,18 +26,31 @@ type SignUpSchema = z.infer<typeof signUpSchema>;
 
 const SignUp = () => {
 	const [isPending, startTransition] = useTransition();
+	const [errorMessage, setErrorMessage] = useState<string | null>(null);
+	const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
+		reset,
 	} = useForm<SignUpSchema>({
 		resolver: zodResolver(signUpSchema),
 	});
 
 	const onSubmit = (data: SignUpSchema) => {
+		setErrorMessage(null);
+		setSuccessMessage(null);
+
 		startTransition(async () => {
-			await signUp(data);
+			try {
+				await signUp(data);
+				setSuccessMessage("Conta criada com sucesso! Faça login para continuar.");
+				reset(); // Limpa o formulário
+			} catch (error) {
+				console.error("❌ Erro ao criar conta:", error);
+				setErrorMessage("Erro ao criar conta. Tente novamente.");
+			}
 		});
 	};
 
@@ -59,6 +72,18 @@ const SignUp = () => {
 			<h2 className="text-lg md:text-xl font-bold mb-2 text-center">
 				Preencha os campos abaixo para criar sua conta corrente!
 			</h2>
+
+			{errorMessage && (
+				<div className="w-full p-2 bg-red-100 border border-red-400 text-red-700 rounded text-sm">
+					{errorMessage}
+				</div>
+			)}
+
+			{successMessage && (
+				<div className="w-full p-2 bg-green-100 border border-green-400 text-green-700 rounded text-sm">
+					{successMessage}
+				</div>
+			)}
 
 			<div className="w-full flex gap-4 flex-col">
 				<InputText
@@ -92,11 +117,18 @@ const SignUp = () => {
 			<div className="w-full flex justify-center mt-2">
 				<Button
 					type="submit"
-					value={isPending ? "Criando..." : "Criar conta"}
+					value={isPending ? "Criando conta..." : "Criar conta"}
 					className="w-full !bg-accent hover:!bg-primary disabled:opacity-50 disabled:cursor-not-allowed"
 					disabled={isPending}
 				/>
 			</div>
+
+			{isPending && (
+				<div className="flex items-center justify-center gap-2 text-sm text-gray-600">
+					<div className="animate-spin rounded-full h-4 w-4 border-b-2 border-accent"></div>
+					<span>Criando sua conta...</span>
+				</div>
+			)}
 		</form>
 	);
 };

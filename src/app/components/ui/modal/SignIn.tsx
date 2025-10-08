@@ -95,8 +95,9 @@ const SignIn = () => {
 
 				<button
 					type="button"
-					className="text-success text-sm underline hover:text-primary text-left"
+					className="text-success text-sm underline hover:text-primary text-left disabled:opacity-50"
 					onClick={() => console.log('Recuperar senha')}
+					disabled={isPending}
 				>
 					Esqueci a senha!
 				</button>
@@ -110,6 +111,13 @@ const SignIn = () => {
 					disabled={isPending}
 				/>
 			</div>
+
+			{isPending && (
+				<div className="flex items-center justify-center gap-2 text-sm text-gray-600">
+					<div className="animate-spin rounded-full h-4 w-4 border-b-2 border-success"></div>
+					<span>Autenticando...</span>
+				</div>
+			)}
 		</form>
 	);
 };
