@@ -4,11 +4,11 @@ import {
   createUser,
   createUserData,
 } from "./api";
-import { setAuthToken } from "./api-config";
+import { API_BASE_URL, setAuthToken } from "./api-config";
 
 export const signIn = async (authData: authUserData) => {
   try {
-    const response = await fetch("/api/hello", {
+    const response = await fetch(`${API_BASE_URL}/api/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(authData),
@@ -19,7 +19,7 @@ export const signIn = async (authData: authUserData) => {
       return null;
     }
 
-    window.location.href = "/store";
+    window.location.href = "/";
     return true;
   } catch (error) {
     console.error("Erro inesperado durante o login:", error);
