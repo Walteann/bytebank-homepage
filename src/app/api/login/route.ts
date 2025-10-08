@@ -13,19 +13,12 @@ export async function POST(req: Request) {
 
     const token = authResponse.result.token;
 
-    const res = NextResponse.json({ success: true });
-
-    // Salva cookie HTTP-only
-    res.cookies.set({
-      name: "authToken",
-      value: token,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      path: "/",
-      maxAge: 60 * 60, // 1 hora
+    // Retorna apenas o token para o cliente decidir o que fazer
+    return NextResponse.json({ 
+      success: true,
+      token: token 
     });
 
-    return res;
   } catch (error) {
     console.error("Erro no login:", error);
     return NextResponse.json({ message: "Erro no login" }, { status: 500 });
