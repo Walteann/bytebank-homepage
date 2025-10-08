@@ -6,6 +6,7 @@ import Button from "../button/Button";
 import InputText from "../input-text/InputText";
 import Image from "next/image";
 import { signIn } from "@/app/services/auth";
+import { signInAction } from "@/app/services/action";
 
 const signInSchema = z.object({
 	email: z.email("Email inválido").nonempty("Email é obrigatório"),
@@ -24,7 +25,7 @@ const SignIn = () => {
 	});
 
 	const onSubmit = (data: SignInSchema) => {
-		signIn(data);
+		signInAction(data);
 	};
 
 	return (
