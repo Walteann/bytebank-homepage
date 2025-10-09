@@ -1,6 +1,9 @@
+"use client";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState, useTransition } from "react";
 
 import Image from "next/image";
 import InputText from "../input-text/InputText";
@@ -11,79 +14,121 @@ const signUpSchema = z.object({
 	username: z
 		.string()
 		.min(3, "O nome precisa ter no mínimo 3 caracteres")
-		.nonempty("Nome é obrigatório"),
+		.min(1, "Nome é obrigatório"),
 	email: z
+		.string()
 		.email("Dado incorreto. Revise e digite novamente.")
-		.nonempty("Email é obrigatório"),
+		.min(1, "Email é obrigatório"),
 	password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
 });
 
 type SignUpSchema = z.infer<typeof signUpSchema>;
 
 const SignUp = () => {
+	const [isPending, startTransition] = useTransition();
+	const [errorMessage, setErrorMessage] = useState<string | null>(null);
+	const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
+		reset,
 	} = useForm<SignUpSchema>({
 		resolver: zodResolver(signUpSchema),
 	});
 
 	const onSubmit = (data: SignUpSchema) => {
-		signUp(data);
+		setErrorMessage(null);
+		setSuccessMessage(null);
+
+		startTransition(async () => {
+			try {
+				await signUp(data);
+				setSuccessMessage("Conta criada com sucesso! Faça login para continuar.");
+				reset(); // Limpa o formulário
+			} catch (error) {
+				console.error("❌ Erro ao criar conta:", error);
+				setErrorMessage("Erro ao criar conta. Tente novamente.");
+			}
+		});
 	};
 
 	return (
 		<form
 			onSubmit={handleSubmit(onSubmit)}
-			className="flex flex-col gap-3 relative py-[26px] overflow-y-auto scroll-thin max-h-[85vh] md:max-h-none md:w-[445px] md:py-[40px] md:items-center md:justify-center lg:md:w-[589px]"
+			className="flex flex-col gap-3 w-full max-w-[445px] mx-auto"
 		>
-			<div className="w-full relative w-[294px] h-[217px] md:w-[354.97px] md:h-[261.59px] flex items-center">
+			<div className="w-full relative h-[180px] md:h-[220px] flex items-center justify-center mb-2">
 				<Image
-					fill
-					className="object-cover !relative"
+					width={355}
+					height={262}
+					className="object-contain"
 					src="https://bytebank-assets.vercel.app/images/Ilustração_SignUp.svg"
-					alt="ilustracao login"
+					alt="ilustracao cadastro"
 				/>
 			</div>
-			<h2 className="text-xl font-bold mb-4">
+			
+			<h2 className="text-lg md:text-xl font-bold mb-2 text-center">
 				Preencha os campos abaixo para criar sua conta corrente!
 			</h2>
 
-			<div className="w-full flex gap-[24px] flex-col">
+			{errorMessage && (
+				<div className="w-full p-2 bg-red-100 border border-red-400 text-red-700 rounded text-sm">
+					{errorMessage}
+				</div>
+			)}
+
+			{successMessage && (
+				<div className="w-full p-2 bg-green-100 border border-green-400 text-green-700 rounded text-sm">
+					{successMessage}
+				</div>
+			)}
+
+			<div className="w-full flex gap-4 flex-col">
 				<InputText
 					{...register("username")}
 					label="Nome"
 					type="text"
 					placeholder="Digite seu nome completo"
 					error={errors.username?.message}
+					disabled={isPending}
 				/>
 
 				<InputText
 					label="E-mail"
 					type="email"
-					placeholder="Digite seu nome completo"
+					placeholder="Digite seu e-mail"
 					{...register("email")}
 					error={errors.email?.message}
+					disabled={isPending}
 				/>
 
 				<InputText
 					label="Senha"
 					type="password"
 					{...register("password")}
-					placeholder="Digite seu nome completo"
-					className="md:w-[280px]"
+					placeholder="Digite sua senha"
 					error={errors.password?.message}
+					disabled={isPending}
 				/>
 			</div>
 
-			<div className="w-full flex justify-center">
+			<div className="w-full flex justify-center mt-2">
 				<Button
-					onClick={handleSubmit(onSubmit)}
-					value="Criar conta"
-					className="max-w-fit !bg-accent hover:!bg-primary md:!max-w-none"
+					type="submit"
+					value={isPending ? "Criando conta..." : "Criar conta"}
+					className="w-full !bg-accent hover:!bg-primary disabled:opacity-50 disabled:cursor-not-allowed"
+					disabled={isPending}
 				/>
 			</div>
+
+			{isPending && (
+				<div className="flex items-center justify-center gap-2 text-sm text-gray-600">
+					<div className="animate-spin rounded-full h-4 w-4 border-b-2 border-accent"></div>
+					<span>Criando sua conta...</span>
+				</div>
+			)}
 		</form>
 	);
 };
