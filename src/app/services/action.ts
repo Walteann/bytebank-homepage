@@ -2,6 +2,7 @@
 
 import { cookies } from 'next/headers'
 import { SignInSchema } from './../lib/schemas/auth'
+import { API_BASE_URL } from './api-config';
 
 // --- TIPOS ---
 interface FetchResponse {
@@ -49,8 +50,6 @@ const axios = {
 }
 // --- FIM AXIOS MOCK ---
 
-// const API_AUTH_URL = 'https://teste-gui---backend-qwxhi2f4za-rj.a.run.app/user/auth'
-const API_AUTH_URL = 'https://backend-392021924812.southamerica-east1.run.app/user/auth'
 interface AuthResponse {
     message: string;
     result?: {
@@ -72,7 +71,7 @@ export async function signInAction(formData: SignInSchema): Promise<SignInResult
     
     try {
         // 1. Requisição POST para autenticação
-        const response = await axios.post(API_AUTH_URL, { email, password });
+        const response = await axios.post(`${API_BASE_URL}/user/auth`, { email, password });
         const data = response.data as AuthResponse;
         
         // 2. Extrai o token
