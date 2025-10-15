@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "./api-config";
+const NEXT_PUBLIC_API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export interface createUserData {
   username: string;
@@ -13,7 +13,7 @@ export interface authUserData {
 
 // Função para criar um usuário
 export const createUser = async (userData: createUserData) => {
-  const response = await fetch(`${API_BASE_URL}/user`, {
+  const response = await fetch(`${NEXT_PUBLIC_API_BASE_URL}/user`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -26,7 +26,7 @@ export const createUser = async (userData: createUserData) => {
 // Função para autenticar um usuário
 export const authenticateUser = async (authData: authUserData) => {
   console.log(authData)
-  const response = await fetch(`${API_BASE_URL}/user/auth`, {
+  const response = await fetch(`${NEXT_PUBLIC_API_BASE_URL}/user/auth`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

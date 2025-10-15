@@ -1,5 +1,3 @@
-export const API_BASE_URL = 'https://tech-challenge-2-awjb.onrender.com';
-
 // armazena o token
 export let authToken: string | null = null;
 
