@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers'
 import { SignInSchema } from './../lib/schemas/auth'
-import { API_BASE_URL } from './api-config';
+
 
 // --- TIPOS ---
 interface FetchResponse {
@@ -71,9 +71,9 @@ export async function signInAction(formData: SignInSchema): Promise<SignInResult
     
     try {
         // 1. Requisição POST para autenticação
-        const response = await axios.post(`${API_BASE_URL}/user/auth`, { email, password });
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/auth`, { email, password });
         const data = response.data as AuthResponse;
-        
+        console.log('✅ Resposta da API:', data);
         // 2. Extrai o token
         const token = data.result?.token;
 
@@ -83,16 +83,6 @@ export async function signInAction(formData: SignInSchema): Promise<SignInResult
                 message: 'Token de autenticação não recebido'
             };
         }
-        
-        // 3. Salva o cookie (opcional, para uso interno do app homepage)
-        const cookieStore = await cookies();
-        cookieStore.set('authToken', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
-            maxAge: 60 * 60 * 24 * 7,
-            path: '/',
-        });
 
         console.log(`✅ Login bem-sucedido para: ${email}`);
 

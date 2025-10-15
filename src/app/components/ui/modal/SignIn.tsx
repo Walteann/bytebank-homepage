@@ -9,6 +9,7 @@ import Button from "../button/Button";
 import InputText from "../input-text/InputText";
 import Image from "next/image";
 import { signInAction } from "@/app/services/action";
+const NEXT_PUBLIC_APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
 const signInSchema = z.object({
 	email: z.string().email("Email inválido").min(1, "Email é obrigatório"),
@@ -37,9 +38,9 @@ const SignIn = () => {
 				const result = await signInAction(data);
 
 				if (result.success && result.token) {
-					console.log("✅ Login bem-sucedido! Redirecionando...");
+					console.log(`✅ Login bem-sucedido! Redirecionando... ${NEXT_PUBLIC_APP_URL} ${result.token}`);
 					const encodedToken = btoa(result.token);
-					const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+					const appUrl = NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 					window.location.href = `${appUrl}/?auth=${encodedToken}`;
 				} else {
 					setErrorMessage(result.message || "Email ou senha incorretos");
