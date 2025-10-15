@@ -21,3 +21,6 @@ criar um .env na raiz do projeto para rodar local.
     NEXT_PUBLIC_API_BASE_URL=https://tech-challenge-2-awjb.onrender.com
     NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
+necessário também baixar o seguinte repositório para rodar no localhost:3000, pois esta projeto é uma zona de micro front-end
+
+[FIAP---Pos-Tech-Challenge-Fase-01](https://github.com/YmayroFerreira/FIAP---Pos-Tech-Challenge-Fase-01)
