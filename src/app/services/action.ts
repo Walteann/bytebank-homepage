@@ -1,8 +1,15 @@
 'use server'
 
-import { cookies } from 'next/headers'
 import { SignInSchema } from './../lib/schemas/auth'
 
+/**
+ * Server Actions - ByteBank Homepage
+ * 
+ * SEGURANÇA:
+ * - Este arquivo contém apenas funções auxiliares
+ * - O login principal agora é feito via /api/login que seta cookie HttpOnly
+ * - Logs são condicionais ao ambiente de desenvolvimento
+ */
 
 // --- TIPOS ---
 interface FetchResponse {
@@ -22,8 +29,8 @@ interface CustomError extends Error {
     };
 }
 
-// --- AXIOS MOCK ---
-const axios = {
+// --- FETCH WRAPPER ---
+const fetchApi = {
     post: async (url: string, data: Record<string, unknown>): Promise<FetchResponse> => {
         const response = await fetch(url, {
             method: 'POST',
@@ -48,7 +55,6 @@ const axios = {
         return { data: responseData, status: response.status };
     }
 }
-// --- FIM AXIOS MOCK ---
 
 interface AuthResponse {
     message: string;
@@ -59,22 +65,24 @@ interface AuthResponse {
 
 interface SignInResult {
     success: boolean;
-    token?: string;
     message: string;
 }
 
 /**
- * Ação do servidor para processar o login e retornar o token
+ * @deprecated Esta função não é mais usada diretamente.
+ * O login agora é feito via /api/login que seta cookie HttpOnly.
+ * Mantida para compatibilidade.
  */
 export async function signInAction(formData: SignInSchema): Promise<SignInResult> {
     const { email, password } = formData;
     
     try {
-        // 1. Requisição POST para autenticação
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/auth`, { email, password });
+        const response = await fetchApi.post(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/auth`, 
+            { email, password }
+        );
         const data = response.data as AuthResponse;
-        console.log('✅ Resposta da API:', data);
-        // 2. Extrai o token
+        
         const token = data.result?.token;
 
         if (!token) {
@@ -84,22 +92,25 @@ export async function signInAction(formData: SignInSchema): Promise<SignInResult
             };
         }
 
-        console.log(`✅ Login bem-sucedido para: ${email}`);
+        if (process.env.NODE_ENV === 'development') {
+            console.log(`Login bem-sucedido para: ${email}`);
+        }
 
-        // 4. RETORNA o token em vez de redirecionar
         return {
             success: true,
-            token: token,
             message: 'Login realizado com sucesso'
         };
         
     } catch (error) {
-        const axiosError = error as CustomError;
+        const fetchError = error as CustomError;
         
-        if (axiosError.response) {
-            const apiMessage = axiosError.response.data?.message || 
-                              `Erro ${axiosError.response.status} na autenticação`;
-            console.error('❌ Erro da API:', apiMessage);
+        if (fetchError.response) {
+            const apiMessage = fetchError.response.data?.message || 
+                              `Erro ${fetchError.response.status} na autenticação`;
+            
+            if (process.env.NODE_ENV === 'development') {
+                console.error('Erro da API:', apiMessage);
+            }
             
             return {
                 success: false,
@@ -107,7 +118,9 @@ export async function signInAction(formData: SignInSchema): Promise<SignInResult
             };
         }
 
-        console.error('❌ Erro na Server Action:', (error as Error).message);
+        if (process.env.NODE_ENV === 'development') {
+            console.error('Erro na Server Action:', (error as Error).message);
+        }
         
         return {
             success: false,

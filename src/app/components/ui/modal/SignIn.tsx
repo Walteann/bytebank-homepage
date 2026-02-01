@@ -8,7 +8,7 @@ import { useState, useTransition } from "react";
 import Button from "../button/Button";
 import InputText from "../input-text/InputText";
 import Image from "next/image";
-import { signInAction } from "@/app/services/action";
+
 const NEXT_PUBLIC_APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
 const signInSchema = z.object({
@@ -35,18 +35,27 @@ const SignIn = () => {
 
 		startTransition(async () => {
 			try {
-				const result = await signInAction(data);
+				// Chama a API de login que seta o cookie HttpOnly
+				const response = await fetch("/homepage/api/login", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify(data),
+					credentials: "include", // Importante: inclui cookies na requisição
+				});
 
-				if (result.success && result.token) {
-					console.log(`✅ Login bem-sucedido! Redirecionando... ${NEXT_PUBLIC_APP_URL} ${result.token}`);
-					const encodedToken = btoa(result.token);
+				const result = await response.json();
+
+				if (response.ok && result.success) {
+					// Redireciona SEM token na URL - o cookie HttpOnly é enviado automaticamente
 					const appUrl = NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-					window.location.href = `${appUrl}/?auth=${encodedToken}`;
+					window.location.href = appUrl;
 				} else {
 					setErrorMessage(result.message || "Email ou senha incorretos");
 				}
 			} catch (error) {
-				console.error("❌ Erro no login:", error);
+				if (process.env.NODE_ENV === "development") {
+					console.error("Erro no login:", error);
+				}
 				setErrorMessage("Erro inesperado ao fazer login");
 			}
 		});
