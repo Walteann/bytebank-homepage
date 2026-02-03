@@ -25,7 +25,6 @@ export const createUser = async (userData: createUserData) => {
 
 // Função para autenticar um usuário
 export const authenticateUser = async (authData: authUserData) => {
-  console.log(authData)
   const response = await fetch(`${NEXT_PUBLIC_API_BASE_URL}/user/auth`, {
     method: "POST",
     headers: {

@@ -1,7 +1,6 @@
 'use server'
 
-import { cookies } from 'next/headers'
-import { SignInSchema } from './../lib/schemas/auth'
+import type { SignInFormData as SignInSchema } from '@/features/auth/schemas/sign-in.schema'
 
 
 // --- TIPOS ---
@@ -73,7 +72,7 @@ export async function signInAction(formData: SignInSchema): Promise<SignInResult
         // 1. Requisição POST para autenticação
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/auth`, { email, password });
         const data = response.data as AuthResponse;
-        console.log('✅ Resposta da API:', data);
+
         // 2. Extrai o token
         const token = data.result?.token;
 
@@ -84,9 +83,7 @@ export async function signInAction(formData: SignInSchema): Promise<SignInResult
             };
         }
 
-        console.log(`✅ Login bem-sucedido para: ${email}`);
-
-        // 4. RETORNA o token em vez de redirecionar
+        // 3. RETORNA o token em vez de redirecionar
         return {
             success: true,
             token: token,
@@ -97,18 +94,15 @@ export async function signInAction(formData: SignInSchema): Promise<SignInResult
         const axiosError = error as CustomError;
         
         if (axiosError.response) {
-            const apiMessage = axiosError.response.data?.message || 
+            const apiMessage = axiosError.response.data?.message ||
                               `Erro ${axiosError.response.status} na autenticação`;
-            console.error('❌ Erro da API:', apiMessage);
-            
+
             return {
                 success: false,
                 message: apiMessage
             };
         }
 
-        console.error('❌ Erro na Server Action:', (error as Error).message);
-        
         return {
             success: false,
             message: 'Erro inesperado ao fazer login'
