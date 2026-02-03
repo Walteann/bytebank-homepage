@@ -10,6 +10,7 @@
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^5.2.1",
+		"@tanstack/react-query": "^5.90.20",
 		"axios": "^1.12.2",
 		"next": "15.4.1",
 		"react": "19.1.0",
@@ -17,7 +18,8 @@
 		"react-hook-form": "^7.62.0",
 		"react-icons": "^5.5.0",
 		"sonner": "^2.0.7",
-		"zod": "^4.0.14"
+		"zod": "^4.0.14",
+		"zustand": "^5.0.10"
 	},
 	"devDependencies": {
 		"@eslint/eslintrc": "^3",
