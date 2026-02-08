@@ -28,7 +28,6 @@ class ApiClient {
         'Content-Type': 'application/json',
         ...fetchOptions.headers,
       },
-      credentials: 'include',
     };
 
     const response = await fetch(`${this.baseUrl}${endpoint}`, config);
