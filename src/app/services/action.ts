@@ -1,6 +1,6 @@
 'use server'
 
-import { SignInSchema } from './../lib/schemas/auth'
+import type { SignInFormData as SignInSchema } from '@/features/auth/schemas/sign-in.schema'
 
 /**
  * Server Actions - ByteBank Homepage
