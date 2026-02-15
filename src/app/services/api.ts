@@ -1,3 +1,11 @@
+/**
+ * API Services - ByteBank Homepage
+ * 
+ * SEGURANÇA:
+ * - Não expõe tokens ao JavaScript do cliente
+ * - Autenticação é feita via cookies HttpOnly
+ */
+
 const NEXT_PUBLIC_API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export interface createUserData {
@@ -11,7 +19,9 @@ export interface authUserData {
   password: string;
 }
 
-// Função para criar um usuário
+/**
+ * Cria um novo usuário
+ */
 export const createUser = async (userData: createUserData) => {
   const response = await fetch(`${NEXT_PUBLIC_API_BASE_URL}/user`, {
     method: "POST",
@@ -23,7 +33,10 @@ export const createUser = async (userData: createUserData) => {
   return response.json();
 };
 
-// Função para autenticar um usuário
+/**
+ * Autentica um usuário
+ * Usado internamente pelo endpoint /api/login
+ */
 export const authenticateUser = async (authData: authUserData) => {
   const response = await fetch(`${NEXT_PUBLIC_API_BASE_URL}/user/auth`, {
     method: "POST",
